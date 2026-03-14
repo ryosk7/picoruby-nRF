@@ -11,6 +11,7 @@ static uint8_t heap_pool[HEAP_SIZE];
 
 int main(void)
 {
+  hal_init();
   mrbc_init(heap_pool, HEAP_SIZE);
   mrbc_create_task(main_task, 0);
   mrbc_run();

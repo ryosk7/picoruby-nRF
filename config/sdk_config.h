@@ -1,0 +1,40 @@
+#ifndef SDK_CONFIG_H
+#define SDK_CONFIG_H
+
+#ifndef NRFX_PRS_ENABLED
+#define NRFX_PRS_ENABLED 1
+#endif
+
+#ifndef NRFX_UARTE_ENABLED
+#define NRFX_UARTE_ENABLED 1
+#endif
+
+#ifndef NRFX_UARTE0_ENABLED
+#define NRFX_UARTE0_ENABLED 1
+#endif
+
+#ifndef UART_ENABLED
+#define UART_ENABLED 1
+#endif
+
+#ifndef NRFX_UART_CONFIG_LOG_ENABLED
+#define NRFX_UART_CONFIG_LOG_ENABLED 0
+#endif
+
+#ifndef NRFX_UARTE_CONFIG_LOG_ENABLED
+#define NRFX_UARTE_CONFIG_LOG_ENABLED 0
+#endif
+
+#ifndef NRFX_PRS_CONFIG_LOG_ENABLED
+#define NRFX_PRS_CONFIG_LOG_ENABLED 0
+#endif
+
+#ifndef NRF_LOG_ENABLED
+#define NRF_LOG_ENABLED 0
+#endif
+
+#ifndef NRF_LOG_DEFAULT_LEVEL
+#define NRF_LOG_DEFAULT_LEVEL 0
+#endif
+
+#endif
