@@ -7,6 +7,10 @@ MRuby::CrossBuild.new("nrf52") do |conf|
 
   conf.cc.host_command = "gcc"
   conf.cc.flags << "-Wall"
+  conf.cc.flags << "-mcpu=cortex-m4"
+  conf.cc.flags << "-mthumb"
+  conf.cc.flags << "-mfloat-abi=hard"
+  conf.cc.flags << "-mfpu=fpv4-sp-d16"
 
   conf.cc.defines << "MRBC_TICK_UNIT=10"
   conf.cc.defines << "MRBC_TIMESLICE_TICK_COUNT=1"
