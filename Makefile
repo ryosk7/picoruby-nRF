@@ -1,13 +1,25 @@
 PROJECT_NAME := picoruby_nrf52
 TARGETS := nrf52840_xxaa
 OUTPUT_DIRECTORY := _build
+.DEFAULT_GOAL := default
 
 SDK_ROOT := ./tmp/nrf52/sdk/nRF5_SDK_17.1.0_ddde560
 PROJ_DIR := .
 
 PICORUBY_DIR := ./picoruby
+
+MRBLIB_DIR := ./mrblib
+GENERATED_MRB_DIR := $(OUTPUT_DIRECTORY)/mrb
+MAIN_TASK_RB := $(MRBLIB_DIR)/main_task.rb
+MAIN_TASK_C := $(GENERATED_MRB_DIR)/main_task.c
+PICORBC := $(PICORUBY_DIR)/bin/picorbc
+
 MRUBY_CONFIG := ./build_config/nrf52.rb
 LIBMRUBY_FILE := $(PICORUBY_DIR)/build/nrf52/lib/libmruby.a
+
+$(MAIN_TASK_C): $(MAIN_TASK_RB) picoruby
+		@mkdir -p $(GENERATED_MRB_DIR)
+		$(PICORBC) -Bmain_task -o$(abspath $(MAIN_TASK_C)) $(abspath $(MAIN_TASK_RB))
 
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: LINKER_SCRIPT := linker/nrf52840.ld
 
@@ -51,7 +63,7 @@ LIB_FILES += $(LIBMRUBY_FILE)
 LIB_FILES += -lc -lnosys -lm
 
 default: nrf52840_xxaa
-nrf52840_xxaa: picoruby
+nrf52840_xxaa: picoruby $(MAIN_TASK_C)
 
 $(LIBMRUBY_FILE):
 		@echo "Building PicoRuby with $(MRUBY_CONFIG)"
