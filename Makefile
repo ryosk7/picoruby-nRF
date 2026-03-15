@@ -21,13 +21,21 @@ $(MAIN_TASK_C): $(MAIN_TASK_RB) picoruby
 		@mkdir -p $(GENERATED_MRB_DIR)
 		$(PICORBC) -Bmain_task -o$(abspath $(MAIN_TASK_C)) $(abspath $(MAIN_TASK_RB))
 
+_build/nrf52840_xxaa/main.c.o: $(MAIN_TASK_C)
+
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: LINKER_SCRIPT := linker/nrf52840.ld
 
 SRC_FILES += \
 		$(SDK_ROOT)/modules/nrfx/mdk/gcc_startup_nrf52840.S \
 		$(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c \
 		$(PROJ_DIR)/main.c \
-		$(PROJ_DIR)/ports/nrf52/hal/hal.c
+		$(PROJ_DIR)/ports/nrf52/hal/hal.c \
+		$(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
+		$(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
+		$(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
+		$(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
+		$(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+		$(SDK_ROOT)/components/libraries/util/app_util_platform.c \
 
 INC_FOLDERS += \
 		$(PROJ_DIR) \
@@ -38,7 +46,16 @@ INC_FOLDERS += \
 		$(SDK_ROOT)/components/toolchain/cmsis/include \
 		$(PROJ_DIR)/config \
 		$(PROJ_DIR)/ports/nrf52/hal \
-		$(PICORUBY_DIR)/mrbgems/picoruby-mrubyc/lib/mrubyc/src
+		$(PICORUBY_DIR)/mrbgems/picoruby-mrubyc/lib/mrubyc/src \
+		$(SDK_ROOT)/integration/nrfx/legacy \
+		$(SDK_ROOT)/modules/nrfx/drivers/include \
+		$(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
+		$(SDK_ROOT)/components/libraries/util \
+		$(SDK_ROOT)/components/boards \
+		$(SDK_ROOT)/components/libraries/log \
+		$(SDK_ROOT)/components/libraries/log/src \
+		$(SDK_ROOT)/components/libraries/strerror \
+		$(SDK_ROOT)/components/libraries/experimental_section_vars \
 
 CFLAGS += -DNRF52840_XXAA
 CFLAGS += -mcpu=cortex-m4
@@ -47,11 +64,15 @@ CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 CFLAGS += -Wall -Werror
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
 CFLAGS += -fno-builtin -fshort-enums
+CFLAGS += -DBOARD_PCA10056
+CFLAGS += -DBSP_DEFINES_ONLY
 
 ASMFLAGS += -mcpu=cortex-m4
 ASMFLAGS += -mthumb -mabi=aapcs
 ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 ASMFLAGS += -DNRF52840_XXAA
+ASMFLAGS += -DBOARD_PCA10056
+ASMFLAGS += -DBSP_DEFINES_ONLY
 
 LDFLAGS += -mthumb -mabi=aapcs -L$(SDK_ROOT)/modules/nrfx/mdk -T$(LINKER_SCRIPT)
 LDFLAGS += -mcpu=cortex-m4
