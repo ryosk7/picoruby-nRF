@@ -3,8 +3,11 @@ TARGETS := nrf52840_xxaa
 OUTPUT_DIRECTORY := _build
 .DEFAULT_GOAL := default
 
-SDK_ROOT := ./tmp/nrf52/sdk/nRF5_SDK_17.1.0_ddde560
 PROJ_DIR := .
+include $(PROJ_DIR)/build_config/nrf52-sdk.mk
+
+SDK_ROOT := $(NRF5_SDK_ROOT)
+ABSOLUTE_PATHS := 1
 
 PICORUBY_DIR := ./picoruby
 
@@ -23,10 +26,10 @@ $(MAIN_TASK_C): $(MAIN_TASK_RB) picoruby
 
 _build/nrf52840_xxaa/main.c.o: $(MAIN_TASK_C)
 
-$(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: LINKER_SCRIPT := linker/nrf52840.ld
+$(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: LINKER_SCRIPT := $(NRF52_LINKER_SCRIPT)
 
 SRC_FILES += \
-		$(SDK_ROOT)/modules/nrfx/mdk/gcc_startup_nrf52840.S \
+		$(NRF52_STARTUP_SRC) \
 		$(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c \
 		$(PROJ_DIR)/main.c \
 		$(PROJ_DIR)/ports/nrf52/hal/hal.c \
@@ -93,6 +96,8 @@ $(LIBMRUBY_FILE):
 picoruby: $(LIBMRUBY_FILE)
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
+ifeq ($(wildcard $(TEMPLATE_PATH)/Makefile.common),)
+$(error nRF5 SDK not found at $(SDK_ROOT). Place $(NRF5_SDK_VERSION) under picoruby-nRF52/nrf52/sdk/)
+endif
 include $(TEMPLATE_PATH)/Makefile.common
 $(foreach target,$(TARGETS),$(call define_target,$(target)))
-
