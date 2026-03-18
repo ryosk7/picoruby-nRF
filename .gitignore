@@ -2,3 +2,4 @@ tmp/
 AGENTS.md
 docs/
 _build/
+nrf52/sdk/
