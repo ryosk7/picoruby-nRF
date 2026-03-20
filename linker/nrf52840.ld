@@ -108,4 +108,8 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
+
+  /* Override startup file stack definitions with linker script values */
+  __StackTop = _estack;
+  __StackLimit = _estack - 0x6000; /* 24KB stack as defined in linker script */
 }
