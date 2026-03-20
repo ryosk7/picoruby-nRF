@@ -3,7 +3,7 @@ TARGETS := nrf52840_xxaa
 OUTPUT_DIRECTORY := _build
 .DEFAULT_GOAL := default
 
-SDK_ROOT := ./tmp/nrf52/sdk/nRF5_SDK_17.1.0_ddde560
+SDK_ROOT := ./nrf52/sdk/nRF5_SDK_17.1.0_ddde560
 PROJ_DIR := .
 
 PICORUBY_DIR := ./picoruby
