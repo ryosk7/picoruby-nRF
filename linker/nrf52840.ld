@@ -45,6 +45,7 @@ SECTIONS
     *(.rodata*)
     . = ALIGN(4);
     _etext = .;
+    PROVIDE(__etext = _etext);
   } > FLASH_FIRMWARE
 
   .data :
@@ -52,6 +53,7 @@ SECTIONS
     . = ALIGN(4);
     _sdata = .;
     _ram_start = .;
+    PROVIDE(__data_start__ = _sdata);
     *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.data)))
     *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.data*)))
     . = ALIGN(4);
@@ -64,11 +66,13 @@ SECTIONS
   {
     . = ALIGN(4);
     _sbss = .;
+    PROVIDE(__bss_start__ = _sbss);
     *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.bss)))
     *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.bss*)))
     *(COMMON)
     . = ALIGN(4);
     _ebss = .;
+    PROVIDE(__bss_end__ = _ebss);
   } > APP_RAM
 
   .uninitialized (NOLOAD) :
