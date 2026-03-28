@@ -22,4 +22,6 @@ MRuby::CrossBuild.new("nrf52") do |conf|
   conf.picoruby(alloc_libc: false)
   conf.gembox "minimum"
   conf.gembox "core"
+  conf.gem core: "picoruby-shell"
+  conf.gem core: "picoruby-watchdog"
 end
