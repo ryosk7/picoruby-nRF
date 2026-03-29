@@ -26,7 +26,6 @@ MRuby::CrossBuild.new("nrf52") do |conf|
 
   conf.cc.defines << "MRBC_TICK_UNIT=10"
   conf.cc.defines << "MRBC_TIMESLICE_TICK_COUNT=1"
-  conf.cc.defines << "MRBC_NO_TIMER=1"
   conf.cc.defines << "MRBC_USE_FLOAT=2"
   conf.cc.defines << "PICORUBY_INT64"
   conf.cc.defines << "NDEBUG"
