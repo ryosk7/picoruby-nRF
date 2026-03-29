@@ -20,6 +20,8 @@ MRuby::CrossBuild.new("nrf52") do |conf|
   conf.cc.include_paths << "#{sdk_root}/integration/nrfx"
   conf.cc.include_paths << "#{sdk_root}/modules/nrfx"
   conf.cc.include_paths << "#{sdk_root}/components/libraries/util"
+  conf.cc.include_paths << "#{sdk_root}/components/libraries/fstorage"
+  conf.cc.include_paths << "#{sdk_root}/components/libraries/experimental_section_vars"
   conf.cc.include_paths << "#{sdk_root}/components/toolchain/cmsis/include"
   conf.cc.include_paths << "#{sdk_root}/components/drivers_nrf/nrf_soc_nosd"
   conf.cc.include_paths << File.expand_path("../config", __dir__)

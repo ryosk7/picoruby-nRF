@@ -34,6 +34,16 @@ SECTIONS
     . = ALIGN(4);
   } > FLASH_ISR
 
+  .fs_data :
+  {
+    . = ALIGN(4);
+    PROVIDE(__start_fs_data = .);
+    KEEP(*(.fs_data))
+    KEEP(*(.fs_data*))
+    PROVIDE(__stop_fs_data = .);
+    . = ALIGN(4);
+  } > FLASH_FIRMWARE
+
   .text :
   {
     . = ALIGN(4);
