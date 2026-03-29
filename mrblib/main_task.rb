@@ -6,6 +6,11 @@ require "editor"
 
 begin
   STDIN.echo = false
+  puts "Initializing FLASH disk as the root volume... "
+  Shell.setup_root_volume(:flash, label: 'storage')
+  Shell.setup_system_files
+  puts "Available"
+
   shell = Shell.new(clean: true)
   puts "Starting shell...\n\n"
   shell.show_logo
