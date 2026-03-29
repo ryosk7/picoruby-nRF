@@ -2,16 +2,21 @@ require 'machine'
 require "watchdog"
 Watchdog.disable
 require "shell"
-
-STDIN = IO.new
-STDOUT = IO.new
+require "editor"
 
 begin
   STDIN.echo = false
 
-  shell = Shell.new(clean: true)
-  puts "Starting shell...\n\n"
+  # Temporary nRF52 workaround: ANSI cursor-position probing over USB CDC is
+  # not stable yet, so shell/editor uses a fixed terminal size.
+  module Editor
+    def self.get_screen_size
+      [24, 80]
+    end
+  end
 
+  shell = Shell.new(clean: false)
+  puts "Starting shell...\n\n"
   shell.show_logo
   shell.start
 rescue => e
