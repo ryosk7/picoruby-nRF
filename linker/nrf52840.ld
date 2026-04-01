@@ -8,7 +8,8 @@ MEMORY
   FLASH_SD (rx) : ORIGIN = 0x00001000, LENGTH = 0x25000
   FLASH_ISR (rx) : ORIGIN = 0x00026000, LENGTH = 0x1000
   FLASH_FIRMWARE (rx) : ORIGIN = 0x00027000, LENGTH = 0x8D000
-  FLASH_FATFS (r) : ORIGIN = 0x000B4000, LENGTH = 0x40000
+  FLASH_MSC (r) : ORIGIN = 0x000B4000, LENGTH = 0x20000
+  FLASH_LFS (r) : ORIGIN = 0x000D4000, LENGTH = 0x20000
   FLASH_BOOTLOADER (rx) : ORIGIN = 0x000F4000, LENGTH = 0xA000
   FLASH_BOOTLOADER_SETTINGS (r) : ORIGIN = 0x000FF000, LENGTH = 0x1000
 
@@ -34,16 +35,6 @@ SECTIONS
     . = ALIGN(4);
   } > FLASH_ISR
 
-  .fs_data :
-  {
-    . = ALIGN(4);
-    PROVIDE(__start_fs_data = .);
-    KEEP(*(.fs_data))
-    KEEP(*(.fs_data*))
-    PROVIDE(__stop_fs_data = .);
-    . = ALIGN(4);
-  } > FLASH_FIRMWARE
-
   .text :
   {
     . = ALIGN(4);
@@ -60,6 +51,10 @@ SECTIONS
     . = ALIGN(4);
     _sdata = .;
     _ram_start = .;
+    PROVIDE(__start_fs_data = .);
+    KEEP(*(.fs_data))
+    KEEP(*(.fs_data*))
+    PROVIDE(__stop_fs_data = .);
     *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.data)))
     *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.data*)))
     . = ALIGN(4);
