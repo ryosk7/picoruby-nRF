@@ -1,6 +1,6 @@
-# picoruby-nRF52
+# picoruby-nRF
 
-`picoruby-nRF52` is the platform repository for the nRF52 PicoRuby port.
+`picoruby-nRF` is the platform repository for the nRF52 PicoRuby port.
 
 It owns:
 - the nRF52 startup and linker files
@@ -11,7 +11,7 @@ It does not own:
 - USB CDC or MSC product behavior
 - product packaging and flashing workflow
 
-Those product-layer concerns belong in `R2P2-nRF52`.
+Those product-layer concerns belong in `R2P2-nRF`.
 
 ## SDK Setup
 
@@ -30,7 +30,7 @@ The published build interface is:
 build_config/nrf52-sdk.mk
 ```
 
-Downstream repositories such as `R2P2-nRF52` should include that file instead
+Downstream repositories such as `R2P2-nRF` should include that file instead
 of hardcoding SDK paths.
 
 ## Build
@@ -54,4 +54,4 @@ The current platform goal is:
 - run `mrblib/main_task.rb`
 - print `Hello World!` on the platform console path
 
-USB CDC is intentionally handled in `R2P2-nRF52`.
+USB CDC is intentionally handled in `R2P2-nRF`.
