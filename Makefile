@@ -11,6 +11,8 @@ ABSOLUTE_PATHS := 1
 
 PICORUBY_DIR := ./picoruby
 
+include $(PROJ_DIR)/build_config/picoruby-nrf52-ports.mk
+
 MRBLIB_DIR := ./mrblib
 GENERATED_MRB_DIR := $(OUTPUT_DIRECTORY)/mrb
 MAIN_TASK_RB := $(MRBLIB_DIR)/main_task.rb
@@ -28,6 +30,8 @@ _build/nrf52840_xxaa/main.c.o: $(MAIN_TASK_C)
 
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: LINKER_SCRIPT := $(NRF52_LINKER_SCRIPT)
 
+SRC_FILES += $(PICORUBY_NRF52_PORT_SRCS)
+
 SRC_FILES += \
 		$(NRF52_STARTUP_SRC) \
 		$(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c \
@@ -39,6 +43,8 @@ SRC_FILES += \
 		$(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
 		$(SDK_ROOT)/components/libraries/util/nrf_assert.c \
 		$(SDK_ROOT)/components/libraries/util/app_util_platform.c \
+
+INC_FOLDERS += $(PICORUBY_NRF52_PORT_INCS)
 
 INC_FOLDERS += \
 		$(PROJ_DIR) \
