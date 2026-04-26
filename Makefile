@@ -97,7 +97,7 @@ picoruby: $(LIBMRUBY_FILE)
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
 ifeq ($(wildcard $(TEMPLATE_PATH)/Makefile.common),)
-$(error nRF5 SDK not found at $(SDK_ROOT). Place $(NRF5_SDK_VERSION) under picoruby-nRF52/nrf52/sdk/)
+$(error nRF5 SDK not found at $(SDK_ROOT). Place $(NRF5_SDK_VERSION) under picoruby-nRF/nrf52/sdk/)
 endif
 include $(TEMPLATE_PATH)/Makefile.common
 $(foreach target,$(TARGETS),$(call define_target,$(target)))
