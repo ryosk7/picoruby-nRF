@@ -32,7 +32,7 @@ MRuby::CrossBuild.new("nrf52") do |conf|
   conf.cc.defines << "PICORUBY_INT64"
   conf.cc.defines << "NDEBUG"
 
-  conf.picoruby(alloc_libc: false)
+  conf.femtoruby(alloc_libc: false)
   conf.gembox "minimum"
   conf.gembox "core"
   conf.gem core: "picoruby-gpio"
