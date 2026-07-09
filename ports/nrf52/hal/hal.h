@@ -9,13 +9,13 @@ extern "C" {
 
 void mrbc_tick(void);
 
-void hal_init(void);
-void hal_enable_irq(void);
-void hal_disable_irq(void);
-void hal_idle_cpu(void);
-int hal_write(int fd, const void *buf, int nbytes);
-int hal_flush(int fd);
-void hal_abort(const char *s);
+void mrbc_hal_init(void);
+void mrbc_hal_enable_irq(void);
+void mrbc_hal_disable_irq(void);
+void mrbc_hal_idle_cpu(void);
+int mrbc_hal_write(int fd, const void *buf, int nbytes);
+int mrbc_hal_flush(int fd);
+void mrbc_hal_abort(const char *s);
 
 #ifdef __cplusplus
 }
