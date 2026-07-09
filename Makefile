@@ -17,7 +17,7 @@ MRBLIB_DIR := ./mrblib
 GENERATED_MRB_DIR := $(OUTPUT_DIRECTORY)/mrb
 MAIN_TASK_RB := $(MRBLIB_DIR)/main_task.rb
 MAIN_TASK_C := $(GENERATED_MRB_DIR)/main_task.c
-PICORBC := $(PICORUBY_DIR)/bin/picorbc
+PICORBC := $(PICORUBY_DIR)/bin/mrbc
 
 MRUBY_CONFIG := ./build_config/nrf52.rb
 LIBMRUBY_FILE := $(PICORUBY_DIR)/build/nrf52/lib/libmruby.a
@@ -44,6 +44,11 @@ SRC_FILES += \
 		$(SDK_ROOT)/components/libraries/util/nrf_assert.c \
 		$(SDK_ROOT)/components/libraries/util/app_util_platform.c \
 
+# Must precede PICORUBY_NRF52_PORT_INCS: picoruby-machine/include also has a
+# hal.h (declaring picorb_hal_*), and quote-includes resolve to the first -I
+# match, so our mrbc_hal_* hal.h has to win the name collision.
+INC_FOLDERS += $(PROJ_DIR)/ports/nrf52/hal
+
 INC_FOLDERS += $(PICORUBY_NRF52_PORT_INCS)
 
 INC_FOLDERS += \
@@ -54,7 +59,6 @@ INC_FOLDERS += \
 		$(SDK_ROOT)/integration/nrfx \
 		$(SDK_ROOT)/components/toolchain/cmsis/include \
 		$(PROJ_DIR)/config \
-		$(PROJ_DIR)/ports/nrf52/hal \
 		$(PICORUBY_DIR)/mrbgems/picoruby-mrubyc/lib/mrubyc/src \
 		$(SDK_ROOT)/integration/nrfx/legacy \
 		$(SDK_ROOT)/modules/nrfx/drivers/include \
