@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <mrubyc.h>
+#include "hal.h"
 #include "_build/mrb/main_task.c"
 
 #ifndef HEAP_SIZE
@@ -11,7 +12,7 @@ static uint8_t heap_pool[HEAP_SIZE];
 
 int main(void)
 {
-  hal_init();
+  mrbc_hal_init();
   mrbc_init(heap_pool, HEAP_SIZE);
   mrbc_create_task(main_task, 0);
   mrbc_run();

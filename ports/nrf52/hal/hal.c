@@ -21,7 +21,7 @@ static void uart_event_handler(nrf_drv_uart_event_t *event, void *context)
   }
 }
 
-void hal_init(void)
+void mrbc_hal_init(void)
 {
   const nrf_drv_uart_config_t config = {
     .pseltxd = UART_TX_PIN,
@@ -39,11 +39,11 @@ void hal_init(void)
   nrf_drv_uart_init(&uart, &config, uart_event_handler);
 }
 
-void hal_enable_irq(void) {}
-void hal_disable_irq(void) {}
-void hal_idle_cpu(void) {}
+void mrbc_hal_enable_irq(void) {}
+void mrbc_hal_disable_irq(void) {}
+void mrbc_hal_idle_cpu(void) {}
 
-int hal_write(int fd, const void *buf, int nbytes)
+int mrbc_hal_write(int fd, const void *buf, int nbytes)
 {
   const uint8_t *p = (const uint8_t *)buf;
   (void)fd;
@@ -58,13 +58,13 @@ int hal_write(int fd, const void *buf, int nbytes)
   return nbytes;
 }
 
-int hal_flush(int fd)
+int mrbc_hal_flush(int fd)
 {
   (void)fd;
   return 0;
 }
 
-void hal_abort(const char *s)
+void mrbc_hal_abort(const char *s)
 {
   (void)s;
   while (1) {
