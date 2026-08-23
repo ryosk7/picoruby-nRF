@@ -18,6 +18,14 @@ PICORUBY_NRF52_PORT_SRCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/nrf52/machine.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/common/machine.c
 
+# The OpenThread port is the only translation unit in the tree that
+# includes OpenThread's headers, which is why it is built here rather
+# than by rake: this file is where the OpenThread include paths are known.
+ifeq ($(NRF52_THREAD),1)
+PICORUBY_NRF52_PORT_SRCS += \
+	$(PICORUBY_DIR)/mrbgems/picoruby-openthread/ports/nrf52/openthread.c
+endif
+
 PICORUBY_NRF52_PORT_INCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/include \
 	$(PICORUBY_DIR)/mrbgems/mruby-compiler/include \
@@ -26,3 +34,9 @@ PICORUBY_NRF52_PORT_INCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-littlefs/include \
 	$(PICORUBY_DIR)/mrbgems/picoruby-littlefs/lib/littlefs \
 	$(SDK_ROOT)/components/libraries/fstorage
+
+ifeq ($(NRF52_THREAD),1)
+PICORUBY_NRF52_PORT_INCS += \
+	$(PICORUBY_DIR)/mrbgems/picoruby-openthread/include \
+	$(OPENTHREAD_INCS)
+endif

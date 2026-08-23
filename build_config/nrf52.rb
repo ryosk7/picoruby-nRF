@@ -48,4 +48,14 @@ MRuby::CrossBuild.new("nrf52") do |conf|
   conf.gem core: "picoruby-uart"
   conf.gem core: "picoruby-shell"
   conf.gem core: "picoruby-watchdog"
+  if ENV["NRF52_THREAD"] == "1"
+    # Thread over the on-chip 802.15.4 radio. Mutually exclusive with BLE:
+    # one radio, and this build has no SoftDevice.
+    conf.gem core: "picoruby-openthread"
+    # Drives OpenThread's tasklet loop from the mruby/c run loop, and
+    # switches on picoruby-irq's event bridge at the same time. Must match
+    # the Makefile side (CPPFLAGS) or picoruby-irq/include/irq.h derives a
+    # different PICORB_IRQ_EVENT_BRIDGE on either half of the build.
+    conf.cc.defines << "MRBC_TASK_SCHEDULER_HOOK=1"
+  end
 end
