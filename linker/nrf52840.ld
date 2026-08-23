@@ -15,16 +15,30 @@ MEMORY
 
   RAM (xrw) : ORIGIN = 0x20000000, LENGTH = 0x40000
   SD_RAM (rw) : ORIGIN = 0x20000000, LENGTH = 0xE000
-  SPIM3_RAM (rw) : ORIGIN = 0x2000E000, LENGTH = 0x2000
-  APP_RAM (xrw) : ORIGIN = 0x20010000, LENGTH = 0x30000
+  /* The 8 KB at 0x2000E000 used to be reserved for the anomaly 198
+     workaround. picoruby-spi deliberately offers SPIM0/1/2 only and
+     nrfx_spim is not built at all, so nothing ever used it, and no
+     output section was ever assigned to it. Folded into APP_RAM.
+     Note ld diagnoses overlap between placed sections but not between
+     MEMORY regions, so a stale region is a silent trap the next time
+     APP_RAM grows. */
+  APP_RAM (xrw) : ORIGIN = 0x2000E000, LENGTH = 0x32000
 }
 
-_minimum_heap_size = 0;
+_stack_size = 24 * 1024;
+/* Reserve the C heap rather than leaving it at zero. mruby/c runs from
+   its own static pool, so libc malloc is newlib's own use today -- but
+   that changes as soon as a stack such as OpenThread or mbedTLS is
+   linked in, and with a reservation of 0 the link succeeds no matter
+   how little room is left. */
+_minimum_heap_size = 8 * 1024;
 _estack = ORIGIN(APP_RAM) + LENGTH(APP_RAM);
 _ram_end = ORIGIN(APP_RAM) + LENGTH(APP_RAM);
-_heap_end = 0x20020000;
-_spim3_ram = ORIGIN(SPIM3_RAM);
-_spim3_ram_end = ORIGIN(SPIM3_RAM) + LENGTH(SPIM3_RAM);
+/* Was hardcoded to 0x20020000, which sits below _heap_start and so
+   describes a heap of negative size. It went unnoticed because _sbrk
+   never reads it; state the real ceiling so a _sbrk that does honour it
+   is correct. */
+_heap_end = ORIGIN(APP_RAM) + LENGTH(APP_RAM) - _stack_size;
 
 SECTIONS
 {
@@ -96,7 +110,7 @@ SECTIONS
   .stack :
   {
     . = ALIGN(4);
-    . = . + (24 * 1024);
+    . = . + _stack_size;
     . = ALIGN(4);
   } > APP_RAM
 
