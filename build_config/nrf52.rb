@@ -30,6 +30,9 @@ MRuby::CrossBuild.new("nrf52") do |conf|
   conf.cc.defines << "MRBC_TIMESLICE_TICK_COUNT=1"
   conf.cc.defines << "MRBC_USE_FLOAT=2"
   conf.cc.defines << "PICORUBY_INT64"
+  # Selects the nRF52 arms of the shared headers -- UART_UNIT_MAX and the
+  # IRQ source registry both branch on it.
+  conf.cc.defines << "PICORB_PLATFORM_NRF52"
   conf.cc.defines << "NDEBUG"
 
   conf.femtoruby(alloc_libc: false)
@@ -37,6 +40,12 @@ MRuby::CrossBuild.new("nrf52") do |conf|
   conf.gembox "core"
   conf.gem core: "picoruby-gpio"
   conf.gem core: "picoruby-irq"
+  conf.gem core: "picoruby-rng"
+  conf.gem core: "picoruby-adc"
+  conf.gem core: "picoruby-pwm"
+  conf.gem core: "picoruby-i2c"
+  conf.gem core: "picoruby-spi"
+  conf.gem core: "picoruby-uart"
   conf.gem core: "picoruby-shell"
   conf.gem core: "picoruby-watchdog"
 end

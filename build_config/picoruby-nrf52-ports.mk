@@ -9,9 +9,20 @@ PICORUBY_NRF52_PORT_SRCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-io-console/ports/nrf52/io-console.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-littlefs/ports/nrf52/flash_hal.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-irq/ports/nrf52/irq.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-rng/ports/nrf52/rng.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-adc/ports/nrf52/adc.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-pwm/ports/nrf52/pwm.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-i2c/ports/nrf52/i2c.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-spi/ports/nrf52/spi.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-uart/ports/nrf52/uart.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/nrf52/machine.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/common/machine.c
 
 PICORUBY_NRF52_PORT_INCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/include \
+	$(PICORUBY_DIR)/mrbgems/mruby-compiler/include \
+	$(PICORUBY_DIR)/mrbgems/mruby-compiler/lib/prism/include \
+	$(PICORUBY_DIR)/mrbgems/picoruby-rng/include \
+	$(PICORUBY_DIR)/mrbgems/picoruby-littlefs/include \
+	$(PICORUBY_DIR)/mrbgems/picoruby-littlefs/lib/littlefs \
 	$(SDK_ROOT)/components/libraries/fstorage
