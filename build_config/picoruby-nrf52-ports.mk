@@ -8,7 +8,9 @@ PICORUBY_NRF52_PORT_SRCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-env/ports/nrf52/env.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-io-console/ports/nrf52/io-console.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-littlefs/ports/nrf52/flash_hal.c \
-	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/nrf52/machine.c
+	$(PICORUBY_DIR)/mrbgems/picoruby-irq/ports/nrf52/irq.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/nrf52/machine.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/common/machine.c
 
 PICORUBY_NRF52_PORT_INCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/include \
