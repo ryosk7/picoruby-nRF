@@ -1,4 +1,9 @@
-MRuby::CrossBuild.new("nrf52") do |conf|
+# The build name carries the variant, so the two configurations do not
+# share build/nrf52/. Without this, libmruby.a survives a switch of
+# NRF52_THREAD -- Makefile:247 makes it depend only on $(MRUBY_CONFIG) --
+# and objects compiled with MRBC_TASK_SCHEDULER_HOOK link against ones
+# compiled without it, which is an ODR violation rather than a link error.
+MRuby::CrossBuild.new(ENV["NRF52_THREAD"] == "1" ? "nrf52-thread" : "nrf52") do |conf|
   sdk_root = File.expand_path("../nrf52/sdk/nRF5_SDK_17.1.0_ddde560", __dir__)
 
   conf.toolchain("gcc")

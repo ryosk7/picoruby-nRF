@@ -149,8 +149,8 @@ SECTIONS
    * so shrinking the filesystem would mean editing picoruby core, and
    * lfs.c refuses to mount an existing image whose block count disagrees.
    *
-   * Two banks of one page each, so usable settings space is half the
-   * region (sSwapSize in that driver).
+   * The driver halves the region into two banks, so with 0x4000 here the
+   * usable settings space is 8 KB, two pages per bank (sSwapSize).
    */
   .ot_flash_data (NOLOAD) :
   {
