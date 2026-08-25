@@ -46,7 +46,21 @@ MEMORY
      Note ld diagnoses overlap between placed sections but not between
      MEMORY regions, so a stale region is a silent trap the next time
      APP_RAM grows. */
-  APP_RAM (xrw) : ORIGIN = 0x20001000, LENGTH = 0x3F000
+  /*
+   * Started above the bootloader's double-reset cell.
+   *
+   * Adafruit's bootloader keeps dbl_reset_mem at 0x20007F7C (its
+   * src/main.c). On the default map that address falls inside the unused
+   * SD_RAM reservation, so nothing could touch it. Reclaiming the
+   * SoftDevice RAM moved APP_RAM over it, and RAM survives a pin reset on
+   * nRF52840 -- so an application that happened to leave 0x5A1AD5 there
+   * would send the next single RESET press into DFU instead of into the
+   * app. Starting above the cell rather than splitting the region keeps
+   * every output section in one place; it gives back 28 KB of the 57 KB
+   * the SoftDevice reservation freed, which still leaves 24 KB more than
+   * the default map had.
+   */
+  APP_RAM (xrw) : ORIGIN = 0x20008000, LENGTH = 0x38000
 }
 
 _stack_size = 24 * 1024;
