@@ -15,6 +15,7 @@ PICORUBY_NRF52_PORT_SRCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-i2c/ports/nrf52/i2c.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-spi/ports/nrf52/spi.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-uart/ports/nrf52/uart.c \
+	$(PICORUBY_DIR)/mrbgems/picoruby-require/ports/nrf52/platform.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/nrf52/machine.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/ports/common/machine.c
 
