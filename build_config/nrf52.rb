@@ -14,6 +14,9 @@ MRuby::CrossBuild.new(ENV["NRF52_THREAD"] == "1" ? "nrf52-thread" : "nrf52") do 
 
   conf.cc.host_command = "gcc"
   conf.cc.flags << "-Wall"
+  # mruby/c's alloc.c calls mrbc_printf from mrbc_alloc_print_statistics but
+  # includes console.h only under MRBC_DEBUG, and GCC 14 makes that an error.
+  conf.cc.flags << "-Wno-error=implicit-function-declaration"
   conf.cc.flags << "-mcpu=cortex-m4"
   conf.cc.flags << "-mthumb"
   conf.cc.flags << "-mfloat-abi=hard"
@@ -41,6 +44,13 @@ MRuby::CrossBuild.new(ENV["NRF52_THREAD"] == "1" ? "nrf52-thread" : "nrf52") do 
   conf.cc.defines << "NDEBUG"
 
   conf.femtoruby(alloc_libc: false)
+  # These need a gem or a radio this board does not have. Each would take
+  # flash for its bytecode and a 4 KB block on the 224 KB disk, and that disk
+  # filling up is what left the others half written.
+  conf.shell_executables_exclude = %w(
+    dfuble dfucli dfutcp ifconfig looper nmble nmcli ntpdate ping rapicco vim
+    wifi_connect wifi_disconnect
+  )
   conf.gembox "minimum"
   conf.gembox "core"
   conf.gem core: "picoruby-gpio"
