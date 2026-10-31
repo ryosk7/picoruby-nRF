@@ -30,6 +30,7 @@ endif
 PICORUBY_NRF52_PORT_INCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-machine/include \
 	$(PICORUBY_DIR)/mrbgems/mruby-compiler/include \
+	$(PICORUBY_DIR)/build/prism/include \
 	$(PICORUBY_DIR)/mrbgems/mruby-compiler/lib/prism/include \
 	$(PICORUBY_DIR)/mrbgems/picoruby-rng/include \
 	$(PICORUBY_DIR)/mrbgems/picoruby-littlefs/include \

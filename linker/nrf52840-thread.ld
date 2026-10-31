@@ -31,10 +31,10 @@ MEMORY
   FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x100000
   FLASH_MBR (rx) : ORIGIN = 0x00000000, LENGTH = 0x1000
   FLASH_ISR (rx) : ORIGIN = 0x00001000, LENGTH = 0x1000
-  FLASH_FIRMWARE (rx) : ORIGIN = 0x00002000, LENGTH = 0xAE000
-  FLASH_OT_SETTINGS (r) : ORIGIN = 0x000B0000, LENGTH = 0x4000
-  FLASH_MSC (r) : ORIGIN = 0x000B4000, LENGTH = 0x8000
-  FLASH_LFS (r) : ORIGIN = 0x000BC000, LENGTH = 0x38000
+  FLASH_FIRMWARE (rx) : ORIGIN = 0x00002000, LENGTH = 0xB6000
+  FLASH_OT_SETTINGS (r) : ORIGIN = 0x000B8000, LENGTH = 0x4000
+  FLASH_MSC (r) : ORIGIN = 0x000BC000, LENGTH = 0x8000
+  FLASH_LFS (r) : ORIGIN = 0x000C4000, LENGTH = 0x30000
   FLASH_BOOTLOADER (rx) : ORIGIN = 0x000F4000, LENGTH = 0xA000
   FLASH_BOOTLOADER_SETTINGS (r) : ORIGIN = 0x000FF000, LENGTH = 0x1000
 
@@ -158,10 +158,8 @@ SECTIONS
    * GCC -- the UICR-derived path is the __CC_ARM branch -- so the region
    * has to be declared or the link fails on two undefined symbols.
    *
-   * Taken off the end of FLASH_FIRMWARE rather than out of FLASH_LFS:
-   * picoruby-littlefs hardcodes LFS_FLASH_BLOCK_COUNT 56 with no override,
-   * so shrinking the filesystem would mean editing picoruby core, and
-   * lfs.c refuses to mount an existing image whose block count disagrees.
+   * lfs.c refuses to mount an image whose block count disagrees, so a
+   * change to FLASH_LFS also needs LFS_FLASH_BLOCK_COUNT in the Makefile.
    *
    * The driver halves the region into two banks, so with 0x4000 here the
    * usable settings space is 8 KB, two pages per bank (sSwapSize).
