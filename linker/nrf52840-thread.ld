@@ -64,11 +64,11 @@ MEMORY
 }
 
 _stack_size = 24 * 1024;
-/* Reserve the C heap rather than leaving it at zero. mruby/c runs from
-   its own static pool, so libc malloc is newlib's own use today -- but
-   that changes as soon as a stack such as OpenThread or mbedTLS is
-   linked in, and with a reservation of 0 the link succeeds no matter
-   how little room is left. */
+/* Reserve room for the C heap rather than leaving it at zero, so the link
+   fails when .data and .bss leave too little. R2P2-nRF sizes its mruby/c
+   pool at boot from what the linker left and keeps the top of it for
+   newlib, bounded by its own _sbrk, so this section's position is not
+   where the heap ends up: it is the guarantee that one fits. */
 _minimum_heap_size = 8 * 1024;
 _estack = ORIGIN(APP_RAM) + LENGTH(APP_RAM);
 _ram_end = ORIGIN(APP_RAM) + LENGTH(APP_RAM);
