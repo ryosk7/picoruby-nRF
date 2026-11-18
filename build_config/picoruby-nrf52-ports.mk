@@ -2,6 +2,12 @@
 # Included by R2P2-nRF/Makefile and components/picoruby-nRF/Makefile.
 # PICORUBY_DIR and SDK_ROOT must be defined before these variables are used.
 
+# mruby/c settings that change its types, for the sources compiled
+# outside rake. Must match build_config/nrf52.rb: there PICORB_INT64 makes
+# lib/picoruby/build.rb add MRBC_INT64, and a translation unit without it
+# sees a 32-bit mrbc_int_t where libmruby.a has a 64-bit one.
+PICORUBY_NRF52_CPPFLAGS = -DMRBC_INT64
+
 PICORUBY_NRF52_PORT_SRCS = \
 	$(PICORUBY_DIR)/mrbgems/picoruby-gpio/ports/nrf52/gpio.c \
 	$(PICORUBY_DIR)/mrbgems/picoruby-watchdog/ports/nrf52/watchdog.c \

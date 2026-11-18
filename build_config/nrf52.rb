@@ -37,7 +37,14 @@ MRuby::CrossBuild.new(ENV["NRF52_THREAD"] == "1" ? "nrf52-thread" : "nrf52") do 
   conf.cc.defines << "MRBC_TICK_UNIT=10"
   conf.cc.defines << "MRBC_TIMESLICE_TICK_COUNT=1"
   conf.cc.defines << "MRBC_USE_FLOAT=2"
-  conf.cc.defines << "PICORUBY_INT64"
+  # lib/picoruby/build.rb turns this into MRBC_INT64. The old spelling,
+  # PICORUBY_INT64, is read by nothing and left Integer at 32 bits.
+  conf.cc.defines << "PICORB_INT64"
+  # Prism's defaults are host-sized: 8 KB arena blocks, and a constant
+  # pool that grows from 4 entries and leaves each outgrown array behind
+  # in the arena. Same values as the RP2 builds.
+  conf.cc.defines << "PM_ARENA_INITIAL_SIZE=2048"
+  conf.cc.defines << "PM_CONSTANT_POOL_MIN_CAPACITY=128"
   # Selects the nRF52 arms of the shared headers -- UART_UNIT_MAX and the
   # IRQ source registry both branch on it.
   conf.cc.defines << "PICORB_PLATFORM_NRF52"
