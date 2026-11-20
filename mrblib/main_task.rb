@@ -22,6 +22,7 @@ begin
       f.puts "Machine.reset_to_bootloader"
     end
   end
+  Shell.bootstrap("/etc/init.d/r2p2")
   puts "Available"
 
   shell = Shell.new(clean: true)
